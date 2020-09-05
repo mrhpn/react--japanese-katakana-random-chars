@@ -87,30 +87,33 @@ function App() {
               className="bg-indigo-500 text-white py-1 px-1 mt-2 md:mt-0 md:px-3 rounded-full hover:bg-indigo-700 cursor-pointer focus:shadow-outline focus:outline-none"
             />
             <span className="block text-gray-500 italic text-xs md:text-sm mt-3">
-              If you want to practice from "a" to "o", specify
-              <a
-                onClick={() => handleShowCharactersBtn()}
-                title="Click to see range"
-                className="text-sm px-2 text-gray-500 cursor-pointer underline focus:shadow-outline focus:outline-none"
-              >
-                range
-              </a>
-              from 1 to 5.
+              If you want to practice from "a" to "o", specify range from 1 to
+              5.
             </span>
+            <button
+              onClick={() => handleShowCharactersBtn()}
+              title="Click to see range"
+              className="text-sm px-2 text-gray-600 cursor-pointer border bg-gray-200 rounded-full focus:shadow-outline focus:outline-none"
+            >
+              View Range
+            </button>
           </form>
           {/* <hr className="my-10" /> */}
-          <div className="w-full h-128 mt-5 Center">
+          <div className="w-full h-128 mt-10 Center">
             <Scrollbars autoHide autoHideTimeout={1000}>
               {shuffledItems &&
                 shuffledItems.map((item, index) => {
                   return (
-                    <figure className="inline-block border p-2 w-16 md:w-20">
-                      <img
-                        key={item}
-                        src={require(`../public/data/characters/${item}.png`)}
-                      />
-                      <figcaption>{index + 1}</figcaption>
-                    </figure>
+                    <React.Fragment>
+                      <figure className="inline-block border p-2 w-16 md:w-20">
+                        <img
+                          key={item}
+                          src={require(`../public/data/characters/${item}.png`)}
+                        />
+                        <figcaption>{index + 1}</figcaption>
+                      </figure>
+                      {(index + 1) % 5 === 0 && <br />}
+                    </React.Fragment>
                   );
                 })}
             </Scrollbars>
