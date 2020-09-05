@@ -38,34 +38,40 @@ function App() {
 
   return (
     <React.Fragment>
-      <div className="App">
-        <h1 className="text-5xl font-bold leading-tight text-indigo-800">
+      <div className="App mt-3 md:mt-0 max-h-screen">
+        <h1 className="text-2xl md:text-5xl font-bold leading-tight text-indigo-800">
           Katakana
         </h1>
         <div className="container m-auto">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <label className="block text-xl font-serif mt-2 text-gray-600">
+            <label className="block text-sm md:text-xl font-serif mt-2 mb-2  text-gray-600">
               Range of Characters You want to practice:
             </label>
-            <label className="text-gray-500">from &nbsp;</label>
+            <label className="text-gray-500 text-sm sm:text-base">
+              from &nbsp;
+            </label>
             <input
               id="from"
               type="number"
               name="from"
-              ref={register()}
-              className="rounded-full border h-8 focus:shadow-outline focus:outline-none px-3 mr-3 w-32"
+              ref={register({ required: "required" })}
+              className="rounded-full border h-8 focus:shadow-outline focus:outline-none px-3 mr-3 w-16 md:w-32"
               placeholder="1"
             />
-            <label className="text-gray-500">to &nbsp;</label>
+            <label className="text-gray-500 text-sm sm:text-base">
+              to &nbsp;
+            </label>
             <input
               id="to"
               type="number"
               name="to"
-              ref={register()}
-              className="rounded-full border h-8 focus:shadow-outline focus:outline-none px-3 mr-3 w-32"
+              ref={register({ required: "required" })}
+              className="rounded-full border h-8 focus:shadow-outline focus:outline-none px-3 mr-3 w-16 md:w-32"
               placeholder="20"
             />
-            <label className="text-gray-500">delay &nbsp;</label>
+            <label className="text-gray-500 text-sm sm:text-base">
+              delay &nbsp;
+            </label>
             <select
               name="delay"
               ref={register()}
@@ -78,9 +84,9 @@ function App() {
             <input
               type="submit"
               value="&nbsp; Start &nbsp;"
-              className="bg-indigo-500 text-white py-1 px-3 rounded-full hover:bg-indigo-700 cursor-pointer focus:shadow-outline focus:outline-none"
+              className="bg-indigo-500 text-white py-1 px-1 mt-2 md:mt-0 md:px-3 rounded-full hover:bg-indigo-700 cursor-pointer focus:shadow-outline focus:outline-none"
             />
-            <span className="block text-gray-500 italic text-sm mt-3">
+            <span className="block text-gray-500 italic text-xs md:text-sm mt-3">
               If you want to practice from "a" to "o", specify
               <a
                 onClick={() => handleShowCharactersBtn()}
@@ -93,12 +99,12 @@ function App() {
             </span>
           </form>
           {/* <hr className="my-10" /> */}
-          <div className="w-full h-128 mt-5">
+          <div className="w-full h-128 mt-5 Center">
             <Scrollbars autoHide autoHideTimeout={1000}>
               {shuffledItems &&
                 shuffledItems.map((item, index) => {
                   return (
-                    <figure className="float-left w-auto border p-2 md:w-20">
+                    <figure className="inline-block border p-2 w-16 md:w-20">
                       <img
                         key={item}
                         src={require(`../public/data/characters/${item}.png`)}
@@ -111,7 +117,7 @@ function App() {
           </div>
         </div>
       </div>
-      <div className="absolute w-full bottom-0 text-center mb-3">
+      <div className="absolute w-full bottom-0 text-center mb-3 md:block hidden">
         <p className="italic text-gray-500 text-sm">
           Katakana - Version 1 <br />
           Practice your writing with digital teacher. <br />
@@ -123,22 +129,22 @@ function App() {
 
       {/* modal */}
       {showModal && (
-        <div class="fixed z-10 inset-0 overflow-y-auto">
-          <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 transition-opacity">
-              <div class="absolute inset-0 bg-glass"></div>
+        <div className="fixed z-10 inset-0 overflow-y-auto">
+          <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div className="fixed inset-0 transition-opacity">
+              <div className="absolute inset-0 bg-glass"></div>
             </div>
-            <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
+            <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
             &#8203;
             <div
-              class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+              className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
               role="dialog"
               aria-modal="true"
               aria-labelledby="modal-headline"
             >
-              <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <div class="sm:flex sm:items-start">
-                  <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
+              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div className="sm:flex sm:items-start">
+                  <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
                     <svg
                       viewBox="0 0 20 20"
                       fill="currentColor"
@@ -151,9 +157,9 @@ function App() {
                       />
                     </svg>
                   </div>
-                  <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                  <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                     <h3
-                      class="text-lg leading-6 font-medium text-gray-900"
+                      className="text-lg leading-6 font-medium text-gray-900"
                       id="modal-headline"
                     >
                       All Katakana Characters
@@ -168,12 +174,12 @@ function App() {
                   </div>
                 </div>
               </div>
-              <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
+              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <span className="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
                   <button
                     onClick={() => handleModalCloseBtn()}
                     type="button"
-                    class="inline-flex justify-center w-full border border-transparent px-4 py-2 bg-green-600 text-base leading-6 font-medium text-white rounded-full hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                    className="inline-flex justify-center w-full border border-transparent px-1 py-1 md:px-4 md:py-2 bg-green-200 text-green-600 text-base leading-6 font-medium rounded-full hover:text-white hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5"
                   >
                     Okay
                   </button>
