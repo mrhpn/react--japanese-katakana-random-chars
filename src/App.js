@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import _ from "lodash";
+import playAudio from "./utils/playAudio";
 import "./App.css";
 import gallery1 from "./assets/gallery-1.jpg";
 
+import InputNumber from "./components/inputNumber";
+
 import { Scrollbars } from "react-custom-scrollbars";
+import Label from "./components/label";
+import Select from "./components/select";
+import Button from "./components/button";
+import IonIcon from "./components/ionIcon";
 
 function App() {
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit } = useForm();
   const [shuffledItems, setShuffledItems] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
@@ -19,22 +26,23 @@ function App() {
     const range = _.range(from, parseInt(to) + 1);
     const shuffledRange = _.shuffle(range);
 
-    shuffledRange.map((number, index) => {
-      setTimeout(() => {
-        const audio = new Audio(`/data/${number}.mp3`);
-        audio.play();
-      }, delay * index);
+    shuffledRange.forEach((name, index) => {
+      setTimeout(() => playAudio(name), delay * index);
     });
 
     setShuffledItems(shuffledRange);
   }
 
-  function handleShowCharactersBtn() {
+  function handleViewRangeBtnClick() {
     setShowModal(true);
   }
 
-  function handleModalCloseBtn() {
+  function handleModalCloseBtnClick() {
     setShowModal(false);
+  }
+
+  function handleCharacterClick(name) {
+    playAudio(name);
   }
 
   return (
@@ -45,78 +53,88 @@ function App() {
         </h1>
         <div className="container m-auto">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <label className="block text-sm md:text-xl font-serif  text-gray-600">
+            <span className="block text-sm md:text-xl font-serif  text-gray-600">
               Range of Characters You want to practice:
-            </label>
-            <label className="text-gray-500 text-sm sm:text-base">
-              from &nbsp;
-            </label>
-            <input
+            </span>
+
+            <Label
+              text="from &nbsp;"
+              htmlFor="from"
+              styles="text-gray-500 text-sm sm:text-base"
+            />
+            <InputNumber
               id="from"
-              type="number"
               name="from"
-              ref={register({ required: "required" })}
-              className="rounded-full border h-8 focus:shadow-outline focus:outline-none px-3 mr-3 w-16 md:w-32"
+              registerObj={{ register, rules: { required: "required" } }}
               placeholder="1"
             />
-            <label className="text-gray-500 text-sm sm:text-base">
-              to &nbsp;
-            </label>
-            <input
-              id="to"
-              type="number"
-              name="to"
-              ref={register({ required: "required" })}
-              className="rounded-full border h-8 focus:shadow-outline focus:outline-none px-3 mr-3 w-16 md:w-32"
-              placeholder="20"
+
+            <Label
+              text="to &nbsp;"
+              htmlFor="to"
+              styles="text-gray-500 text-sm sm:text-base"
             />
-            <label className="text-gray-500 text-sm sm:text-base">
-              delay &nbsp;
-            </label>
-            <select
+            <InputNumber
+              id="to"
+              name="to"
+              registerObj={{ register, rules: { required: "required" } }}
+              placeholder="45"
+            />
+
+            <Label
+              text="delay &nbsp;"
+              htmlFor="delay"
+              styles="text-gray-500 text-sm sm:text-base"
+            />
+            <Select
+              id="delay"
               name="delay"
-              ref={register()}
-              className="rounded-full border h-8 focus:shadow-outline focus:outline-none px-3 mr-3 w-16"
-            >
-              <option value="3000">3s</option>
-              <option value="5000">5s</option>
-              <option value="7000">7s</option>
-            </select>
-            <button
+              registerObj={{ register }}
+              options={[
+                { text: "3s", value: "3000" },
+                { text: "5s", value: "5000" },
+                { text: "7s", value: "7000" },
+              ]}
+            />
+
+            <Button
               type="submit"
-              className="bg-indigo-500 text-white py-1 px-1 mt-2 md:mt-0 md:px-3 md:py-1 shadow-lg hover:shadow-xs rounded-full hover:bg-indigo-700 cursor-pointer focus:shadow-outline focus:outline-none"
-            >
-              <ion-icon
-                name="megaphone-outline"
-                class="align-middle"
-              ></ion-icon>{" "}
-              .oO
-            </button>
+              Icon={<IonIcon name="megaphone-outline" styles="align-middle" />}
+              title="Start Listening!"
+              styles="bg-indigo-500 text-white py-1 px-1 mt-2 md:mt-0 md:px-3 md:py-1 shadow-lg hover:shadow-xs rounded-full hover:bg-indigo-700 cursor-pointer focus:shadow-outline focus:outline-none"
+            />
+
             <span className="block text-gray-500 italic text-xs">
               If you want to practice from "a" to "o", specify range from 1 to
               5.
             </span>
-            <button
-              onClick={() => handleShowCharactersBtn()}
+
+            <Button
+              type="button"
+              text="View Range"
               title="Click to see range"
-              className="text-xs px-2 text-gray-600 cursor-pointer border bg-gray-200 rounded-full focus:shadow-outline focus:outline-none"
-            >
-              View Range
-            </button>
+              styles="text-xs px-2 text-gray-600 cursor-pointer border bg-gray-200 rounded-full focus:shadow-outline focus:outline-none"
+              onClick={handleViewRangeBtnClick}
+            />
           </form>
-          {/* <hr className="my-10" /> */}
           <div className="w-full h-128 mt-3 --center" style={{ zIndex: 99 }}>
             <Scrollbars autoHide autoHideTimeout={1000}>
               {shuffledItems &&
                 shuffledItems.map((item, index) => {
                   return (
-                    <React.Fragment>
-                      <figure className="inline-block border p-2 w-16 md:w-20">
+                    <React.Fragment key={item}>
+                      <figure
+                        onClick={() => handleCharacterClick(item)}
+                        title="Click to listen"
+                        className="inline-block border p-2 w-16 md:w-24 cursor-pointer"
+                      >
                         <img
-                          key={item}
+                          alt={item}
                           src={require(`../public/data/characters/${item}.png`)}
                         />
-                        <figcaption>{index + 1}</figcaption>
+                        <figcaption className="text-gray-400">
+                          {index + 1}
+                        </figcaption>
                       </figure>
                       {(index + 1) % 5 === 0 && <br />}
                     </React.Fragment>
@@ -134,13 +152,14 @@ function App() {
           Katakana - Version 1 <br />
           Practice your writing with digital teacher. <br />
         </p>
-        <p className="italic text-gray-400 text-xs">
-          mr.htetphyonaing@gmail.com
+        <p className="italic text-gray-500 text-xs">
+          &#169; mr.htetphyonaing@gmail.com
         </p>
       </div>
       <img
         src={gallery1}
-        className="fixed bottom-0 opacity-5"
+        alt="Abstract"
+        className="fixed bottom-0 opacity-10"
         style={{ zIndex: -10 }}
       />
       <svg
@@ -195,6 +214,7 @@ function App() {
                     </h3>
                     <div className="mt-2">
                       <img
+                        alt="All Katakana Characters"
                         src={
                           window.location.origin + "/data/characters/all.png"
                         }
@@ -205,13 +225,13 @@ function App() {
               </div>
               <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                 <span className="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                  <button
-                    onClick={() => handleModalCloseBtn()}
+                  <Button
                     type="button"
-                    className="inline-flex justify-center w-full border border-transparent px-1 py-1 md:px-4 md:py-2 bg-green-200 text-green-600 text-base leading-6 font-medium rounded-full hover:text-white hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150 sm:text-sm sm:leading-5"
-                  >
-                    Okay
-                  </button>
+                    text="Okay"
+                    title="Click to see range"
+                    styles="inline-flex justify-center w-full border border-transparent px-1 py-1 md:px-4 md:py-2 bg-green-200 text-green-600 text-base leading-6 font-medium rounded-full hover:text-white hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-out sm:text-sm sm:leading-5"
+                    onClick={handleModalCloseBtnClick}
+                  />
                 </span>
               </div>
             </div>
