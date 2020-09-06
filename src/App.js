@@ -13,8 +13,25 @@ import Select from "./components/select";
 import Button from "./components/button";
 import IonIcon from "./components/ionIcon";
 
+import Confetti from "react-dom-confetti";
+
+const config = {
+  angle: "87",
+  spread: 360,
+  startVelocity: "30",
+  elementCount: "159",
+  dragFriction: "0.07",
+  duration: "2570",
+  stagger: "5",
+  width: "14px",
+  height: "10px",
+  perspective: "797px",
+  colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"],
+};
+
 function App() {
   const { register, handleSubmit } = useForm();
+  const [isSpeakerButtonClick, setIsSpeakerButtonClick] = useState(false);
   const [shuffledItems, setShuffledItems] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
@@ -33,6 +50,10 @@ function App() {
     setShuffledItems(shuffledRange);
   }
 
+  function handleSpeakerButtonClick() {
+    setIsSpeakerButtonClick(true);
+  }
+
   function handleViewRangeBtnClick() {
     setShowModal(true);
   }
@@ -47,7 +68,7 @@ function App() {
 
   return (
     <React.Fragment>
-      <div className="App mt-3 md:mt-0 object-cover">
+      <div className="App mt-3 md:mt-0 object-cover overflow-hidden">
         <h1 className="--gradient text-2xl md:text-5xl font-bold leading-tight text-indigo-800">
           Katakana
         </h1>
@@ -99,10 +120,13 @@ function App() {
 
             <Button
               type="submit"
+              onClick={handleSpeakerButtonClick}
               Icon={<IonIcon name="megaphone-outline" styles="align-middle" />}
               title="Start Listening!"
               styles="bg-indigo-500 text-white py-1 px-1 mt-2 md:mt-0 md:px-3 md:py-1 shadow-lg hover:shadow-xs rounded-full hover:bg-indigo-700 cursor-pointer focus:shadow-outline focus:outline-none"
             />
+            <Confetti active={isSpeakerButtonClick} config={config}></Confetti>
+            <Confetti active={showModal} config={config}></Confetti>
 
             <span className="block text-gray-500 italic text-xs">
               If you want to practice from "a" to "o", specify range from 1 to
