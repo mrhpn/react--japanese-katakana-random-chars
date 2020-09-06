@@ -2,8 +2,19 @@
   text-align: center;
 }
 
-.Center {
+ion-icon {
+  font-size: 24px;
+}
+
+.--enter {
   text-align: center;
+}
+
+.--gradient {
+  background: -webkit-linear-gradient(rgb(101, 186, 255), #434190);
+  background-clip: #434190;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .App-logo {
@@ -11,7 +22,7 @@
   pointer-events: none;
 }
 
-.bg-glass {
+.--bg-glass {
   width: 100%;
   height: 100%;
   background: inherit;

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import _ from "lodash";
 import "./App.css";
+import gallery1 from "./assets/gallery-1.jpg";
 
 import { Scrollbars } from "react-custom-scrollbars";
 
@@ -38,13 +39,13 @@ function App() {
 
   return (
     <React.Fragment>
-      <div className="App mt-3 md:mt-0 max-h-screen">
-        <h1 className="text-2xl md:text-5xl font-bold leading-tight text-indigo-800">
+      <div className="App mt-3 md:mt-0 object-cover">
+        <h1 className="--gradient text-2xl md:text-5xl font-bold leading-tight text-indigo-800">
           Katakana
         </h1>
         <div className="container m-auto">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <label className="block text-sm md:text-xl font-serif mt-2 mb-2  text-gray-600">
+            <label className="block text-sm md:text-xl font-serif  text-gray-600">
               Range of Characters You want to practice:
             </label>
             <label className="text-gray-500 text-sm sm:text-base">
@@ -81,25 +82,30 @@ function App() {
               <option value="5000">5s</option>
               <option value="7000">7s</option>
             </select>
-            <input
+            <button
               type="submit"
-              value="&nbsp; Start &nbsp;"
-              className="bg-indigo-500 text-white py-1 px-1 mt-2 md:mt-0 md:px-3 rounded-full hover:bg-indigo-700 cursor-pointer focus:shadow-outline focus:outline-none"
-            />
-            <span className="block text-gray-500 italic text-xs md:text-sm mt-3">
+              className="bg-indigo-500 text-white py-1 px-1 mt-2 md:mt-0 md:px-3 md:py-1 shadow-lg hover:shadow-xs rounded-full hover:bg-indigo-700 cursor-pointer focus:shadow-outline focus:outline-none"
+            >
+              <ion-icon
+                name="megaphone-outline"
+                class="align-middle"
+              ></ion-icon>{" "}
+              .oO
+            </button>
+            <span className="block text-gray-500 italic text-xs">
               If you want to practice from "a" to "o", specify range from 1 to
               5.
             </span>
             <button
               onClick={() => handleShowCharactersBtn()}
               title="Click to see range"
-              className="text-sm px-2 text-gray-600 cursor-pointer border bg-gray-200 rounded-full focus:shadow-outline focus:outline-none"
+              className="text-xs px-2 text-gray-600 cursor-pointer border bg-gray-200 rounded-full focus:shadow-outline focus:outline-none"
             >
               View Range
             </button>
           </form>
           {/* <hr className="my-10" /> */}
-          <div className="w-full h-128 mt-10 Center">
+          <div className="w-full h-128 mt-3 --center" style={{ zIndex: 99 }}>
             <Scrollbars autoHide autoHideTimeout={1000}>
               {shuffledItems &&
                 shuffledItems.map((item, index) => {
@@ -120,7 +126,10 @@ function App() {
           </div>
         </div>
       </div>
-      <div className="absolute w-full bottom-0 text-center mb-3 md:block hidden">
+      <div
+        className="absolute w-full bottom-0 text-center mb-1 md:block hidden"
+        style={{ zIndex: -1 }}
+      >
         <p className="italic text-gray-500 text-sm">
           Katakana - Version 1 <br />
           Practice your writing with digital teacher. <br />
@@ -129,13 +138,30 @@ function App() {
           mr.htetphyonaing@gmail.com
         </p>
       </div>
+      <img
+        src={gallery1}
+        className="fixed bottom-0 opacity-5"
+        style={{ zIndex: -10 }}
+      />
+      <svg
+        className="bottom-0 hidden md:block fixed"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1440 320"
+        style={{ zIndex: -5 }}
+      >
+        <path
+          fill="#f3f4f5"
+          fillOpacity="0.8"
+          d="M0,160L24,165.3C48,171,96,181,144,202.7C192,224,240,256,288,256C336,256,384,224,432,229.3C480,235,528,277,576,288C624,299,672,277,720,245.3C768,213,816,171,864,133.3C912,96,960,64,1008,64C1056,64,1104,96,1152,138.7C1200,181,1248,235,1296,213.3C1344,192,1392,96,1416,48L1440,0L1440,320L1416,320C1392,320,1344,320,1296,320C1248,320,1200,320,1152,320C1104,320,1056,320,1008,320C960,320,912,320,864,320C816,320,768,320,720,320C672,320,624,320,576,320C528,320,480,320,432,320C384,320,336,320,288,320C240,320,192,320,144,320C96,320,48,320,24,320L0,320Z"
+        ></path>
+      </svg>
 
       {/* modal */}
       {showModal && (
         <div className="fixed z-10 inset-0 overflow-y-auto">
           <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <div className="fixed inset-0 transition-opacity">
-              <div className="absolute inset-0 bg-glass"></div>
+              <div className="absolute inset-0 --bg-glass"></div>
             </div>
             <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
             &#8203;
