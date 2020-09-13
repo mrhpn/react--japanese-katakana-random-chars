@@ -12,6 +12,7 @@ import Label from "./components/label";
 import Select from "./components/select";
 import Button from "./components/button";
 import IonIcon from "./components/ionIcon";
+import Error from "./components/error";
 
 import Confetti from "react-dom-confetti";
 
@@ -21,8 +22,8 @@ const config = {
   startVelocity: "30",
   elementCount: "159",
   dragFriction: "0.07",
-  duration: "2570",
-  stagger: "5",
+  duration: "1500",
+  stagger: "0",
   width: "14px",
   height: "10px",
   perspective: "797px",
